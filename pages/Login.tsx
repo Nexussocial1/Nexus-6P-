@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = ReactRouterDOM.useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +75,7 @@ const Login: React.FC = () => {
         </form>
 
         <div className="mt-8 text-center text-sm text-slate-500">
-          New terminal user? <Link to="/register" className="text-cyan-400 font-bold hover:underline">Request Access</Link>
+          New terminal user? <ReactRouterDOM.Link to="/register" className="text-cyan-400 font-bold hover:underline">Request Access</ReactRouterDOM.Link>
         </div>
       </div>
     </div>

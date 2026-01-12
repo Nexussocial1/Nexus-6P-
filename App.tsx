@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from './firebase';
 import Navbar from './components/Navbar';
@@ -17,17 +17,17 @@ interface RouteGuardProps {
   user: User | null;
 }
 
-// Fix: Moved ProtectedRoute outside the App component and used interface to resolve type inference issues
+// Fix: Use ReactRouterDOM properties to bypass missing export member errors
 const ProtectedRoute: React.FC<RouteGuardProps> = ({ children, user }) => {
-  const location = useLocation();
-  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
+  const location = ReactRouterDOM.useLocation();
+  if (!user) return <ReactRouterDOM.Navigate to="/login" state={{ from: location }} replace />;
   return <>{children}</>;
 };
 
-// Fix: Moved AdminRoute outside the App component and used interface to resolve type inference issues
+// Fix: Use ReactRouterDOM properties to bypass missing export member errors
 const AdminRoute: React.FC<RouteGuardProps> = ({ children, user }) => {
   const isAdmin = user?.email === 'hh527924@gmail.com';
-  if (!user || !isAdmin) return <Navigate to="/" replace />;
+  if (!user || !isAdmin) return <ReactRouterDOM.Navigate to="/" replace />;
   return <>{children}</>;
 };
 
@@ -55,18 +55,17 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-[#050505] text-slate-200">
       {user && <Navbar user={user} />}
       <div className={user ? "pt-20 pb-10 max-w-6xl mx-auto px-4" : ""}>
-        <Routes>
-          <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-          <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
+        <ReactRouterDOM.Routes>
+          <ReactRouterDOM.Route path="/login" element={!user ? <Login /> : <ReactRouterDOM.Navigate to="/" />} />
+          <ReactRouterDOM.Route path="/register" element={!user ? <Register /> : <ReactRouterDOM.Navigate to="/" />} />
           
-          {/* Fix: Pass user prop explicitly to route guards to satisfy TypeScript requirements */}
-          <Route path="/" element={<ProtectedRoute user={user}><Feed /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute user={user}><Profile /></ProtectedRoute>} />
-          <Route path="/groups" element={<ProtectedRoute user={user}><Groups /></ProtectedRoute>} />
-          <Route path="/admin" element={<AdminRoute user={user}><Admin /></AdminRoute>} />
+          <ReactRouterDOM.Route path="/" element={<ProtectedRoute user={user}><Feed /></ProtectedRoute>} />
+          <ReactRouterDOM.Route path="/profile" element={<ProtectedRoute user={user}><Profile /></ProtectedRoute>} />
+          <ReactRouterDOM.Route path="/groups" element={<ProtectedRoute user={user}><Groups /></ProtectedRoute>} />
+          <ReactRouterDOM.Route path="/admin" element={<AdminRoute user={user}><Admin /></AdminRoute>} />
           
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+          <ReactRouterDOM.Route path="*" element={<ReactRouterDOM.Navigate to="/" />} />
+        </ReactRouterDOM.Routes>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import App from './App';
 
 const rootElement = document.getElementById('root');
@@ -12,8 +12,8 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <ReactRouterDOM.HashRouter>
       <App />
-    </HashRouter>
+    </ReactRouterDOM.HashRouter>
   </React.StrictMode>
 );

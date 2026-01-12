@@ -1,0 +1,10 @@
+{
+  "short_name": "Nexus",
+  "name": "Nexus Social: The Future of Connection",
+  "description": "A futuristic social networking platform featuring a real-time feed and glassmorphism UI.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#22d3ee",
+  "background_color": "#020202",
+  "icons": []
+}
